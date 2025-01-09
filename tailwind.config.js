@@ -17,6 +17,8 @@ export default {
         customYellowProgress: '#FFA048',
         customRedProgress: '#FF7979',
         customGreenProgress: '#78D700',
+        customGreyWhiteTheme: '#1C1D22',
+        customDateWhiteTheme: '#888DA7'
       }
     },
     fontFamily: {
@@ -24,4 +26,5 @@ export default {
     }
   },
   plugins: [],
+  darkMode: 'selector'
 }
