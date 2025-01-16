@@ -65,7 +65,7 @@ export function Main() {
                     <div className="max-h-[18px] min-w-[320px] flex flex-1 justify-between items-center mt-1.5 text-customGreyWhiteTheme/50 dark:text-white/50">
                         <span className="font-semibold text-sm">To do (4)</span>
                         <div className="flex gap-1.5">
-                            <div className="h-[18px] w-[18px] flex justify-center items-center rounded-3xl bg-customGreyWhiteTheme/[0.08] darK:bg-white/10">
+                            <div className="h-[18px] w-[18px] flex justify-center items-center rounded-3xl bg-customGreyWhiteTheme/[0.08] dark:bg-white/10">
                                 <Plus size={10} strokeWidth={4}/>
                             </div>
                             <span className="h-[14px] font-semibold text-sm text-customGreyWhiteTheme dark:text-white">Add new task</span>
@@ -249,7 +249,7 @@ export function Main() {
                     <div className="max-h-[18px] min-w-[320px] flex flex-1 justify-between items-center mt-1.5 text-customGreyWhiteTheme/50 dark:text-white/50">
                         <span className="font-semibold text-sm">In progress (4)</span>
                         <div className="flex gap-1.5">
-                            <div className="h-[18px] w-[18px] flex justify-center items-center rounded-3xl bg-customGreyWhiteTheme/[0.08] darK:bg-white/10">
+                            <div className="h-[18px] w-[18px] flex justify-center items-center rounded-3xl bg-customGreyWhiteTheme/[0.08] dark:bg-white/10">
                                 <Plus size={10} strokeWidth={4}/>
                             </div>
                             <span className="h-[14px] font-semibold text-sm text-customGreyWhiteTheme dark:text-white">Add new task</span>
@@ -433,7 +433,7 @@ export function Main() {
                     <div className="max-h-[18px] min-w-[320px] flex flex-1 justify-between items-center mt-1.5 text-customGreyWhiteTheme/50 dark:text-white/50">
                         <span className="font-semibold text-sm">Done (3)</span>
                         <div className="flex gap-1.5">
-                            <div className="h-[18px] w-[18px] flex justify-center items-center rounded-3xl bg-customGreyWhiteTheme/[0.08] darK:bg-white/10">
+                            <div className="h-[18px] w-[18px] flex justify-center items-center rounded-3xl bg-customGreyWhiteTheme/[0.08] dark:bg-white/10">
                                 <Plus size={10} strokeWidth={4}/>
                             </div>
                             <span className="h-[14px] font-semibold text-sm text-customGreyWhiteTheme dark:text-white">Add new task</span>

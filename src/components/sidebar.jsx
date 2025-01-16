@@ -17,7 +17,7 @@ export function SideBar() {
 
                 <div className='flex flex-col gap-2'>
                     <div className='h-12 w-12 flex justify-center items-center rounded-3xl bg-white/10'>
-                        <LayoutGrid color='#fff' className='hover:bg-white' size={22}/>
+                        <LayoutGrid color='#fff' size={22}/>
                     </div>
                     
                     <div className='h-12 w-12 flex justify-center items-center rounded-3xl'>
