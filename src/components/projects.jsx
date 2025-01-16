@@ -1,4 +1,5 @@
 import { Plus, SunMedium, Moon, ChevronRight, ChevronDown } from "lucide-react"
+import { Tree } from "../components/ui/tree-items"
 
 export function Projects() {
 
@@ -9,6 +10,9 @@ export function Projects() {
     function themeDark() {
         document.documentElement.classList.contains('dark') || document.documentElement.classList.toggle('dark')
     }
+
+    const projects = ["All projects (3)", "Design system", "User flow", "Ux"]
+    const tasks = ["All tasks (11)", "To do (4)", "In progress (4)", "Done"]
 
     return (
         <div className="h-screen w-80 flex flex-col justify-between bg-white dark:bg-projectsComponent text-customGreyWhiteTheme dark:text-white p-7 drop-shadow-[40px_180px_80px_rgba(28,29,34,0.06)] dark:drop-shadow-none">
@@ -31,88 +35,14 @@ export function Projects() {
                             <span className="font-bold">Projects</span>
                             <ChevronDown size={14} strokeWidth={3}/>
                         </div>
-                        <ul className="">
-                            <li className="h-9 gap-2 flex mb-[10px]">
-                                <div className="h-[46px] w-[15px] relative flex-none">
-                                    <i className="h-[46px] w-[2px] bg-customGreyWhiteTheme/10 dark:bg-white/10 absolute"></i>
-                                    <i className="h-[2px] w-[13px] bg-customGreyWhiteTheme/10 dark:bg-white/10 absolute top-[18px] left-[2px]"></i>
-                                </div>
-                                <div className="min-w-0 flex justify-start items-center px-4 py-2 max-w-45">
-                                    <span className="leading-9 truncate">All projects (3)</span>
-                                </div>
-                            </li>
-                            <li className="h-9 gap-2 flex mb-[10px]">
-                                <div className="h-[46px] w-[15px] relative flex-none">
-                                    <i className="h-[46px] w-[2px] bg-customGreyWhiteTheme/10 dark:bg-white/10 absolute"></i>
-                                    <i className="h-[2px] w-[13px] bg-customGreyWhiteTheme/10 dark:bg-white/10 absolute top-[18px] left-[2px]"></i>
-                                </div>
-                                <div className="min-w-0 flex justify-start items-center px-4 py-2 max-w-45 rounded-3xl bg-customGreyWhiteTheme/[0.04] dark:bg-white/10">
-                                    <span className="leading-9 text-customGreyWhiteTheme dark:text-white truncate">Design system</span>
-                                </div>
-                            </li>
-                            <li className="h-9 gap-2 flex mb-[10px]">
-                                <div className="h-[46px] w-[15px] relative">
-                                    <i className="h-[46px] w-[2px] bg-customGreyWhiteTheme/10 dark:bg-white/10 absolute"></i>
-                                    <i className="h-[2px] w-[13px] bg-customGreyWhiteTheme/10 dark:bg-white/10 absolute top-[18px] left-[2px]"></i>
-                                </div>
-                                <div className="min-w-0 flex justify-start items-center px-4 py-2 max-w-45">
-                                    <span className="leading-9 truncate">User flow</span>
-                                </div>
-                            </li>
-                            <li className="h-9 gap-2 flex">
-                            <div className="h-[46px] w-[15px] relative">
-                                    <i className="h-[36px] w-[2px] bg-customGreyWhiteTheme/10 dark:bg-white/10 absolute"></i>
-                                    <i className="h-[2px] w-[13px] bg-customGreyWhiteTheme/10 dark:bg-white/10 absolute top-[18px] left-[2px]"></i>
-                                </div>
-                                <div className="min-w-0 flex justify-start items-center px-4 py-2 max-w-45">
-                                    <span className="leading-9 truncate">Ux</span>
-                                </div>
-                            </li>
-                        </ul>
+                        <Tree items={projects} selected={2}/>
                     </div>
                     <div>
                         <div className="flex justify-between items-center text-customGreyWhiteTheme dark:text-white mb-4">
                             <span className="font-bold">Tasks</span>
                             <ChevronDown size={14} strokeWidth={3}/>
                         </div>
-                        <ul className="">
-                            <li className="h-9 gap-2 flex mb-[10px]">
-                            <div className="h-[46px] w-[15px] relative">
-                                    <i className="h-[46px] w-[2px] bg-customGreyWhiteTheme/10 dark:bg-white/10 absolute"></i>
-                                    <i className="h-[2px] w-[13px] bg-customGreyWhiteTheme/10 dark:bg-white/10 absolute top-[18px] left-[2px]"></i>
-                                </div>
-                                <div className="min-w-0 flex justify-start items-center px-4 py-2 max-w-45">
-                                    <span className="leading-9 truncate">All tasks (11)</span>
-                                </div>
-                            </li>
-                            <li className="h-9 gap-2 flex mb-[10px]">
-                                <div className="h-[46px] w-[15px] relative">
-                                    <i className="h-[46px] w-[2px] bg-customGreyWhiteTheme/10 dark:bg-white/10 absolute"></i>
-                                    <i className="h-[2px] w-[13px] bg-customGreyWhiteTheme/10 dark:bg-white/10 absolute top-[18px] left-[2px]"></i>
-                                </div>
-                                <div className="min-w-0 flex justify-start items-center px-4 py-2 max-w-45">
-                                    <span className="leading-9 truncate">To do (4)</span>
-                                </div>
-                            </li>
-                            <li className="h-9 gap-2 flex mb-[10px]">
-                            <div className="h-[46px] w-[15px] relative">
-                                    <i className="h-[46px] w-[2px] bg-customGreyWhiteTheme/10 dark:bg-white/10 absolute"></i>
-                                    <i className="h-[2px] w-[13px] bg-customGreyWhiteTheme/10 dark:bg-white/10 absolute top-[18px] left-[2px]"></i>
-                                </div>
-                                <div className="min-w-0 flex justify-start items-center px-4 py-2 max-w-45 rounded-3xl bg-customGreyWhiteTheme/[0.04] dark:bg-white/10">
-                                    <span className="leading-9 text-customGreyWhiteTheme dark:text-white truncate">In progress (4)</span>
-                                </div>
-                            </li>
-                            <li className="h-9 gap-2 flex">
-                            <div className="h-[46px] w-[15px] relative">
-                                    <i className="h-[36px] w-[2px] bg-customGreyWhiteTheme/10 dark:bg-white/10 absolute"></i>
-                                    <i className="h-[2px] w-[13px] bg-customGreyWhiteTheme/10 dark:bg-white/10 absolute top-[18px] left-[2px]"></i>
-                                </div>
-                                <div className="min-w-0 flex justify-start items-center px-4 py-2 max-w-45">
-                                    <span className="leading-9 truncate">Done</span>
-                                </div>
-                            </li>
-                        </ul>
+                        <Tree items={tasks} selected={2}/>
                     </div>
                     <div>
                         <div className="flex justify-between">
