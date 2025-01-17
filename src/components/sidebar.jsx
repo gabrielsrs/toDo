@@ -1,3 +1,5 @@
+import { NavLink } from 'react-router'
+
 import { LayoutGrid, User, Calendar, SquareKanban, CloudUpload, Map, SlidersHorizontal, LogOut } from 'lucide-react';
 
 import { ToDoIcon } from './ui/toDo-icon';
@@ -9,43 +11,73 @@ export function SideBar() {
             <div className='flex flex-col gap-9 items-center my-6'>
                 <div className='flex flex-col items-center gap-10'>
                     <CustomEllipsis />
-                    <ToDoIcon/>
+                    <ToDoIcon />
                 </div>
 
+                <NavLink>
+
+                </NavLink>
                 <div className='flex flex-col gap-2'>
-                    <div className='h-12 w-12 flex justify-center items-center rounded-3xl bg-white/10'>
-                        <LayoutGrid color='#fff' size={22}/>
-                    </div>
-                    
-                    <div className='h-12 w-12 flex justify-center items-center rounded-3xl'>
-                        <User color='#fff' className='opacity-50' size={22}/>
-                    </div>
+                    <NavLink to="/">
+                        {({ isActive }) => (
+                            <div className={`h-12 w-12 flex justify-center items-center rounded-3xl ${isActive ? 'bg-white/10' : ''}`}>
+                                <LayoutGrid color='#fff' className={`${isActive ? '' : 'opacity-50'}`} size={22}/>
+                            </div>
+                        )}
+                    </NavLink>
 
-                    <div className='h-12 w-12 flex justify-center items-center rounded-3xl'>
-                        <Calendar color='#fff' className='opacity-50' size={22}/>
-                    </div>
+                    <NavLink to="/user">
+                        {({ isActive }) => (
+                            <div className={`h-12 w-12 flex justify-center items-center rounded-3xl ${isActive ? 'bg-white/10' : ''}`}>
+                                <User color='#fff' className={`${isActive ? '' : 'opacity-50'}`} size={22}/>
+                            </div>
+                        )}
+                    </NavLink>
 
-                    <div className='h-12 w-12 flex justify-center items-center rounded-3xl'>
-                        <SquareKanban color='#fff' className='opacity-50' size={22}/>
-                    </div>
+                    <NavLink to="/calendar">
+                        {({ isActive }) => (
+                            <div className={`h-12 w-12 flex justify-center items-center rounded-3xl ${isActive ? 'bg-white/10' : ''}`}>
+                                <Calendar color='#fff' className={`${isActive ? '' : 'opacity-50'}`} size={22}/>
+                            </div>
+                        )}
+                    </NavLink>
 
-                    <div className='h-12 w-12 flex justify-center items-center rounded-3xl'>
-                        <CloudUpload color='#fff' className='opacity-50' size={22}/>
-                    </div>
+                    <NavLink to="/metrics">
+                        {({ isActive }) => (
+                            <div className={`h-12 w-12 flex justify-center items-center rounded-3xl ${isActive ? 'bg-white/10' : ''}`}>
+                                <SquareKanban color='#fff' className={`${isActive ? '' : 'opacity-50'}`} size={22}/>
+                            </div>
+                        )}
+                    </NavLink>
 
-                    <div className='h-12 w-12 flex justify-center items-center rounded-3xl'>
-                        <Map color='#fff' className='opacity-50' size={22}/>
-                    </div>
+                    <NavLink to="/upload">
+                        {({ isActive }) => (
+                            <div className={`h-12 w-12 flex justify-center items-center rounded-3xl ${isActive ? 'bg-white/10' : ''}`}>
+                                <CloudUpload color='#fff' className={`${isActive ? '' : 'opacity-50'}`} size={22}/>
+                            </div>
+                        )}
+                    </NavLink>
 
-                    <div className='h-12 w-12 flex justify-center items-center rounded-3xl'>
-                        <SlidersHorizontal color='#fff' className='opacity-50' size={22}/>
-                    </div>
+                    <NavLink to="/location">
+                        {({ isActive }) => (
+                            <div className={`h-12 w-12 flex justify-center items-center rounded-3xl ${isActive ? 'bg-white/10' : ''}`}>
+                                <Map color='#fff' className={`${isActive ? '' : 'opacity-50'}`} size={22}/>
+                            </div>
+                        )}
+                    </NavLink>
 
+                    <NavLink to="/settings">
+                        {({ isActive }) => (
+                            <div className={`h-12 w-12 flex justify-center items-center rounded-3xl ${isActive ? 'bg-white/10' : ''}`}>
+                                <SlidersHorizontal color='#fff' className={`${isActive ? '' : 'opacity-50'}`} size={22}/>
+                            </div>
+                        )}
+                    </NavLink>
                 </div>
             </div>
 
             <div className='h-12 w-12 flex justify-center items-center rounded-3xl my-8'>
-                <LogOut color='#fff' className='opacity-50' size={22}/>
+                <LogOut color='#fff' className='opacity-50 hover:opacity-100 cursor-pointer select-none' size={22}/>
             </div>
             
         </aside>
