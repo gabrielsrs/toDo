@@ -10,7 +10,7 @@ export function CardContent({ text, count, cardInfo }) {
         <div className="min-w-[320px] flex flex-col flex-1 gap-4 rounded-xl bg-white dark:bg-customCardContent p-4 outline-customGreyWhiteTheme/[0.08] outline-2 outline-dashed dark:outline-0">
             <div className="max-h-[18px] min-w-[320px] flex flex-1 justify-between items-center mt-1.5 text-customGreyWhiteTheme/50 dark:text-white/50">
                 <span className="font-semibold text-sm">{ text } ({ count })</span>
-                <div className="flex gap-1.5">
+                <div className="flex gap-1.5 cursor-pointer">
                     <div className="h-[18px] w-[18px] flex justify-center items-center rounded-3xl bg-customGreyWhiteTheme/[0.08] dark:bg-white/10">
                         <Plus size={10} strokeWidth={4}/>
                     </div>
@@ -51,11 +51,11 @@ function Card(props) {
     return (            
         <div className="flex flex-col flex-1 gap-5 p-5 rounded-2xl bg-white dark:bg-customCard z-10 border-customGreyWhiteTheme/[0.06] border-2 dark:border-0">
             <div className="h-[37px] flex flex-1 justify-between mb-[1px]">
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-1.5 cursor-pointer">
                     <span className="h-4 font-bold text-base text-customGreyWhiteTheme dark:text-white leading-4">{ props.title }</span>
                     <span className="h-[15px] font-medium text-sm leading-4">{ props.description }</span>
                 </div>
-                <div className="h-[26px] w-[26px] flex justify-center items-center rounded-3xl border-2 border-customGreyWhiteTheme/[0.08] dark:border-white/10 top-0 right-0">
+                <div className="h-[26px] w-[26px] flex justify-center items-center rounded-3xl border-2 border-customGreyWhiteTheme/[0.08] dark:border-white/10 top-0 right-0 cursor-pointer">
                     <Ellipsis size={14} strokeWidth={3}/>
                 </div>
             </div>    

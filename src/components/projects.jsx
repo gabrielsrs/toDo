@@ -1,8 +1,8 @@
-import { Plus, SunMedium, Moon, ChevronRight, ChevronDown } from "lucide-react"
+import { Plus, SunMedium, Moon } from "lucide-react"
 import { Tree } from "../components/ui/tree-items"
+import { DropDownSideItem } from "../components/ui/dropDownSideItem"
 
 export function Projects() {
-
     function themeLight() {
         document.documentElement.classList.contains('dark') && document.documentElement.classList.toggle('dark')
     }
@@ -19,42 +19,27 @@ export function Projects() {
             <div className="w-[262px] flex flex-col flex-1">
                 <div className="h-10 flex justify-between items-center mb-8 mt-0.5">
                     <span className="text-3xl font-bold align-baseline">Projects</span>
-                    <div className="h-8 w-8 flex justify-center items-center rounded-3xl bg-customGreyWhiteTheme/[0.08] dark:bg-white/10 text-customGreyWhiteTheme/50 dark:text-white/50">
+                    <div className="h-8 w-8 flex justify-center items-center rounded-3xl bg-customGreyWhiteTheme/[0.08] dark:bg-white/10 text-customGreyWhiteTheme/50 dark:text-white/50 cursor-pointer">
                         <Plus size={14} strokeWidth={3}/>
                     </div>
                 </div>
                 <div className="w-[261px] flex flex-col flex-1 gap-7 text-base font-semibold text-customGreyWhiteTheme/50  dark:text-white/50">
                     <div>
-                        <div className="h-4 flex justify-between items-center">
-                            <span>Team</span>
-                            <ChevronRight size={14} strokeWidth={3}/>
-                        </div>
+                        <DropDownSideItem title="Team"/>
                     </div>
                     <div>
-                        <div className="flex justify-between items-center text-customGreyWhiteTheme dark:text-white mb-4">
-                            <span className="font-bold">Projects</span>
-                            <ChevronDown size={14} strokeWidth={3}/>
-                        </div>
+                        <DropDownSideItem title="Projects"/>
                         <Tree items={projects} selected={2}/>
                     </div>
                     <div>
-                        <div className="flex justify-between items-center text-customGreyWhiteTheme dark:text-white mb-4">
-                            <span className="font-bold">Tasks</span>
-                            <ChevronDown size={14} strokeWidth={3}/>
-                        </div>
+                        <DropDownSideItem title="Tasks"/>
                         <Tree items={tasks} selected={2}/>
                     </div>
                     <div>
-                        <div className="flex justify-between">
-                            <span>Reminders</span>
-                            <ChevronRight size={14} strokeWidth={3}/>
-                        </div>
+                        <DropDownSideItem title="Reminders"/>
                     </div>
                     <div >
-                        <div className="flex justify-between">
-                            <span>Messengers</span>
-                            <ChevronRight size={14} strokeWidth={3}/>
-                        </div>
+                        <DropDownSideItem title="Messengers"/>
                     </div>
                 </div>
             </div>
