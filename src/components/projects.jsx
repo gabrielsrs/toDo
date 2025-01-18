@@ -1,8 +1,17 @@
+import { useState } from "react"
 import { Plus, SunMedium, Moon } from "lucide-react"
 import { Tree } from "../components/ui/tree-items"
 import { DropDownSideItem } from "../components/ui/dropDownSideItem"
 
 export function Projects() {
+    const [isOpen, setIsOpen] = useState([
+        { title: "Projects", status: false },
+        { title: "Team", status: false },
+        { title: "Tasks", status: false },
+        { title: "Reminders", status: false },
+        { title: "Messengers", status: false }
+    ])
+    
     function themeLight() {
         document.documentElement.classList.contains('dark') && document.documentElement.classList.toggle('dark')
     }
@@ -11,8 +20,33 @@ export function Projects() {
         document.documentElement.classList.contains('dark') || document.documentElement.classList.toggle('dark')
     }
 
-    const projects = ["All projects (3)", "Design system", "User flow", "Ux"]
-    const tasks = ["All tasks (11)", "To do (4)", "In progress (4)", "Done"]
+    const data = [
+        {
+            title: "Team",
+            items: [],
+            selected: 0
+        },
+        {
+            title: "Projects",
+            items: ["All projects (3)", "Design system", "User flow", "Ux"],
+            selected: 2
+        },
+        {
+            title: "Tasks",
+            items: ["All tasks (11)", "To do (4)", "In progress (4)", "Done"],
+            selected: 2
+        },
+        {
+            title: "Reminders",
+            items: [],
+            selected: 0
+        },
+        {
+            title: "Messengers",
+            items: [],
+            selected: 0
+        },
+    ]
 
     return (
         <div className="h-screen w-80 flex flex-col justify-between bg-white dark:bg-projectsComponent text-customGreyWhiteTheme dark:text-white p-7 drop-shadow-[40px_180px_80px_rgba(28,29,34,0.06)] dark:drop-shadow-none">
@@ -24,23 +58,15 @@ export function Projects() {
                     </div>
                 </div>
                 <div className="w-[261px] flex flex-col flex-1 gap-7 text-base font-semibold text-customGreyWhiteTheme/50  dark:text-white/50">
-                    <div>
-                        <DropDownSideItem title="Team"/>
-                    </div>
-                    <div>
-                        <DropDownSideItem title="Projects"/>
-                        <Tree items={projects} selected={2}/>
-                    </div>
-                    <div>
-                        <DropDownSideItem title="Tasks"/>
-                        <Tree items={tasks} selected={2}/>
-                    </div>
-                    <div>
-                        <DropDownSideItem title="Reminders"/>
-                    </div>
-                    <div >
-                        <DropDownSideItem title="Messengers"/>
-                    </div>
+                    {data.map((item, index) => {
+                        return (
+                            <div key={index}>
+                                <DropDownSideItem title={item.title} isOpen={isOpen} setIsOpen={setIsOpen} index={index} />
+                                <Tree items={item.items} selected={item.selected} isOpen={isOpen} index={index}/>
+                            </div>
+                        )
+
+                    })}
                 </div>
             </div>
             <div className="h-[42px] w-[262px] flex justify-center items-center rounded-3xl bg-customGreyWhiteTheme/[0.04]	dark:bg-white/10">
