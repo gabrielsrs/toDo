@@ -6,11 +6,16 @@ import { ToDoIcon } from './ui/toDo-icon';
 import { CustomEllipsis } from "../components/ui/customEllipsis"
 
 export function SideBar() {
+    function toggleDialog() {
+        const dialog = document.querySelector('dialog')
+        dialog.showModal()
+    }
+    
     return (
         <aside className='h-screen min-w-[90px] flex flex-col items-center justify-between bg-sidebarComponent'>
             <div className='flex flex-col gap-9 items-center my-6'>
                 <div className='flex flex-col items-center gap-10'>
-                    <CustomEllipsis />
+                    <CustomEllipsis onClick={toggleDialog}/>
                     <ToDoIcon />
                 </div>
 
