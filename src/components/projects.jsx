@@ -20,6 +20,11 @@ export function Projects() {
         document.documentElement.classList.contains('dark') || document.documentElement.classList.toggle('dark')
     }
 
+    function toggleDialog() {
+        const dialog = document.querySelector('dialog')
+        dialog.showModal()
+    }
+
     const data = [
         {
             title: "Team",
@@ -53,7 +58,7 @@ export function Projects() {
             <div className="w-[262px] flex flex-col flex-1">
                 <div className="h-10 flex justify-between items-center mb-8 mt-0.5">
                     <span className="text-3xl font-bold align-baseline">Projects</span>
-                    <div className="h-8 w-8 flex justify-center items-center rounded-3xl bg-customGreyWhiteTheme/[0.08] dark:bg-white/10 text-customGreyWhiteTheme/50 dark:text-white/50 cursor-pointer">
+                    <div className="h-8 w-8 flex justify-center items-center rounded-3xl bg-customGreyWhiteTheme/[0.08] dark:bg-white/10 text-customGreyWhiteTheme/50 dark:text-white/50 cursor-pointer" onClick={toggleDialog}>
                         <Plus size={14} strokeWidth={3}/>
                     </div>
                 </div>

@@ -2,6 +2,8 @@ import './index.css'
 import { SideBar } from './components/sidebar'
 import { Projects } from './components/projects'
 import { Main } from './components/main'
+import { Dialog } from "./components/ui/dialog.jsx"
+
 
 function App() {
   return (
@@ -9,6 +11,7 @@ function App() {
       <SideBar/>
       <Projects/>
       <Main/>
+      <Dialog />
     </>
   )
 }

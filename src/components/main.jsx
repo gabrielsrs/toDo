@@ -1,3 +1,5 @@
+import { useState } from "react"
+
 import { Search, Bell, Calendar, StretchHorizontal, Plus, Ellipsis } from "lucide-react"
 import profile from "../assets/profile.png"
 
@@ -6,6 +8,12 @@ import { cardData } from "../data/getTodo.js"
 import { Button } from "../components/ui/button.jsx"
 
 export function Main() {
+    const [search, setSearch] = useState(false)
+
+    function toggleDialog() {
+        const dialog = document.querySelector('dialog')
+        dialog.showModal()
+    }
 
     const { todo, inProgress, done } = cardData()
 
@@ -17,16 +25,19 @@ export function Main() {
                         <span className="font-bold text-xl">Welcome back, Vincent 👋</span>
                     </div>
                     <div className="flex justify-between items-center gap-6 text-customGreyWhiteTheme dark:text-white">
-                        <Search size={22} cursor="pointer"/>
-                        <div className="h-[22px] w-[22px] relative">
+                        <div className={`flex justify-between items-center gap-2 cursor-pointer rounded-3xl ${search && 'w-57 bg-customGreyWhiteTheme/10 dark:bg-white/10 p-2'}`}>
+                            <input type="text" className={`flex-1 ${search ? 'p-1 outline-none bg-transparent' : 'hidden'}`} placeholder="Search"/>
+                            <Search size={22} cursor="pointer" onClick={() => setSearch(true)} onDoubleClick={() => setSearch(false)}/>
+                        </div>
+                        <div className="h-[22px] w-[22px] relative" onClick={toggleDialog}>
                             <div className="h-1.5 w-1.5 absolute top-0.5 right-[3px] rounded-3xl bg-orange-400"></div>
                             <Bell size={22} cursor="pointer"/>
                         </div>
-                        <div className="flex justify-between gap-2 cursor-pointer">
+                        <div className="flex justify-between gap-2 cursor-pointer" onClick={toggleDialog}>
                             <Calendar size={22}/>
                             <span className="font-semibold text-base text-customGreyWhiteTheme/50 dark:text-white/50">19 May 2022</span>
                         </div>
-                        <div className="h-9 w-9 rounded-3xl cursor-pointer">
+                        <div className="h-9 w-9 rounded-3xl cursor-pointer"  onClick={toggleDialog}>
                             <img src={profile} alt="" className="rounded-3xl"/>
                         </div>
                     </div>
@@ -41,7 +52,7 @@ export function Main() {
                             </div>
                             <span className="h-[18px] leading-[18px]">Board view</span>
                         </div>
-                        <div className="flex gap-2 px-[12px] pb-[18px] cursor-pointer">
+                        <div className="flex gap-2 px-[12px] pb-[18px] cursor-pointer" onClick={toggleDialog}>
                             <div className="h-[18px] w-[18px] flex justify-center items-center rounded-3xl bg-customGreyWhiteTheme/[0.08] dark:bg-white/10">
                                 <Plus size={10} strokeWidth={4}/>
                             </div>
@@ -49,13 +60,13 @@ export function Main() {
                         </div>
                     </div>
                     <div className="h-[38px] w-[286px] flex items-center gap-4 self-start">
-                        <div className="text-customGreyWhiteTheme dark:text-white cursor-pointer">
+                        <div className="text-customGreyWhiteTheme dark:text-white cursor-pointer"  onClick={toggleDialog}>
                             <span>Filter</span>
                         </div>
-                        <div className="cursor-pointer">
+                        <div className="cursor-pointer"  onClick={toggleDialog}>
                             <span>Sort</span>
                         </div>
-                        <div className="h-[26px] w-[26px] flex justify-center items-center rounded-3xl border-2 border-customGreyWhiteTheme/10 dark:border-white/10 cursor-pointer">
+                        <div className="h-[26px] w-[26px] flex justify-center items-center rounded-3xl border-2 border-customGreyWhiteTheme/10 dark:border-white/10 cursor-pointer"  onClick={toggleDialog}>
                             <Ellipsis size={14} strokeWidth={3}/>
                         </div>
                         <Button type="button">New template</Button>
