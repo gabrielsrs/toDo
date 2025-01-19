@@ -13,7 +13,7 @@ export function CardContent({ text, count, cardInfo }) {
     }
 
     return (
-        <div className="min-w-[320px] flex flex-col flex-1 gap-4 rounded-xl bg-white dark:bg-customCardContent p-4 outline-customGreyWhiteTheme/[0.08] outline-2 outline-dashed dark:outline-0">
+        <div className="max-w-[calc(100%/3)] min-w-[320px] flex flex-col flex-1 gap-4 rounded-xl bg-white dark:bg-customCardContent p-4 outline-customGreyWhiteTheme/[0.08] outline-2 outline-dashed dark:outline-0">
             <div className="max-h-[18px] min-w-[320px] flex flex-1 justify-between items-center mt-1.5 text-customGreyWhiteTheme/50 dark:text-white/50">
                 <span className="font-semibold text-sm">{ text } ({ count })</span>
                 <div className="flex gap-1.5 cursor-pointer"  onClick={toggleDialog}>

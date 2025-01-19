@@ -29,27 +29,22 @@ export function Projects() {
         {
             title: "Team",
             items: [],
-            selected: 0
         },
         {
             title: "Projects",
             items: ["All projects (3)", "Design system", "User flow", "Ux"],
-            selected: 2
         },
         {
             title: "Tasks",
             items: ["All tasks (11)", "To do (4)", "In progress (4)", "Done"],
-            selected: 2
         },
         {
             title: "Reminders",
             items: [],
-            selected: 0
         },
         {
             title: "Messengers",
             items: [],
-            selected: 0
         },
     ]
 
@@ -67,7 +62,7 @@ export function Projects() {
                         return (
                             <div key={index}>
                                 <DropDownSideItem title={item.title} isOpen={isOpen} setIsOpen={setIsOpen} index={index} />
-                                <Tree items={item.items} selected={item.selected} isOpen={isOpen} index={index}/>
+                                <Tree items={item.items} isOpen={isOpen} index={index}/>
                             </div>
                         )
 
