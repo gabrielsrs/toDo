@@ -14,5 +14,5 @@ createRoot(document.getElementById('root')).render(
       <Route path="/location" element={<RawPage />} />
       <Route path="/settings" element={<RawPage />} />
     </Routes>
-  </BrowserRouter>,
+  </BrowserRouter>
 )

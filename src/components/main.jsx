@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 
 import { Search, Bell, Calendar, StretchHorizontal, Plus, Ellipsis } from "lucide-react"
 import profile from "../assets/profile.png"
@@ -6,6 +6,7 @@ import profile from "../assets/profile.png"
 import { CardContent } from "./ui/card-structure"
 import { cardData } from "../data/getTodo.js"
 import { Button } from "../components/ui/button.jsx"
+import { Context } from "../App.jsx"
 
 export function Main() {
     const [search, setSearch] = useState(false)
@@ -16,6 +17,8 @@ export function Main() {
     }
 
     const { todo, inProgress, done } = cardData()
+
+    const [selectedItem] = useContext(Context)
 
     return (
         <main className="flex flex-col flex-1 bg-white dark:bg-mainComponent px-8 pb-8 pt-[29px]">
@@ -74,11 +77,33 @@ export function Main() {
                 </div>
                 <hr className="border-[1px] border-customGreyWhiteTheme/[0.08] dark:border-white/10"/>
             </menu>
-            <div className="flex flex-1 gap-[22px]">
-                <CardContent text="To do" count={todo.length} cardInfo={ todo } />
-                <CardContent text="In progress" count={inProgress.length} cardInfo={ inProgress } />
-                <CardContent text="Done" count={done.length} cardInfo={ done } />
-            </div>
+            
+            {selectedItem.length && selectedItem[2][0]  && (
+                <div className="flex flex-1 gap-[22px]">
+                    <CardContent text="To do" count={todo.length} cardInfo={ todo } />
+                    <CardContent text="In progress" count={inProgress.length} cardInfo={ inProgress } />
+                    <CardContent text="Done" count={done.length} cardInfo={ done } />
+                </div>
+            )}
+        
+            {selectedItem.length && selectedItem[2][1] && (
+                <div className="flex flex-1 gap-[22px]">
+                    <CardContent text="To do" count={todo.length} cardInfo={ todo } />
+                </div>
+            )}
+        
+            {selectedItem.length && selectedItem[2][2] && (
+                <div className="flex flex-1 gap-[22px]">
+                    <CardContent text="In progress" count={inProgress.length} cardInfo={ inProgress } />
+                </div>
+            )}
+        
+            {selectedItem.length && selectedItem[2][3] && (
+                <div className="flex flex-1 gap-[22px]">
+                    <CardContent text="Done" count={done.length} cardInfo={ done } />
+                </div>
+            )}
+            
         </main>
     )
 }

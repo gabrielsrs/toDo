@@ -3,6 +3,8 @@ import { Plus, Ellipsis, List, Paperclip, MessageSquareText } from "lucide-react
 import profile1 from "../../assets/profile1.png"
 import profile2 from "../../assets/profile2.png"
 
+import tailwindConfig from "../../../tailwind.config"
+import resolveConfig from 'tailwindcss/resolveConfig'
 
 export function CardContent({ text, count, cardInfo }) {
     function toggleDialog() {
@@ -11,7 +13,7 @@ export function CardContent({ text, count, cardInfo }) {
     }
 
     return (
-        <div className="min-w-[320px] flex flex-col flex-1 gap-4 rounded-xl bg-white dark:bg-customCardContent p-4 outline-customGreyWhiteTheme/[0.08] outline-2 outline-dashed dark:outline-0">
+        <div className="max-w-[calc(100%/3)] min-w-[320px] flex flex-col flex-1 gap-4 rounded-xl bg-white dark:bg-customCardContent p-4 outline-customGreyWhiteTheme/[0.08] outline-2 outline-dashed dark:outline-0">
             <div className="max-h-[18px] min-w-[320px] flex flex-1 justify-between items-center mt-1.5 text-customGreyWhiteTheme/50 dark:text-white/50">
                 <span className="font-semibold text-sm">{ text } ({ count })</span>
                 <div className="flex gap-1.5 cursor-pointer"  onClick={toggleDialog}>
@@ -98,9 +100,10 @@ function BehindMask () {
 
 function Progress ({ totalQuests, tasksComplete, progressStatusColor, progressCustomBar }) {
     const progressStatus = (tasksComplete/totalQuests) * 100
+    const fullConfig = resolveConfig(tailwindConfig)
 
     return (
-        <div className="h-[30px] flex flex-col flex-1 justify-between">
+        <div className="h-[30px] flex flex-col flex-1 justify-between relative">
             <div className="max-h-4 flex flex-1 justify-between items-center">
                 <div className="flex gap-1 items-center">
                     <List size={16} className="text-customGreyWhiteTheme/60 dark:text-white/60"/>
@@ -108,7 +111,11 @@ function Progress ({ totalQuests, tasksComplete, progressStatusColor, progressCu
                 </div>
                 <span className="font-semibold text-sm text-customGreyWhiteTheme dark:text-white">{tasksComplete}/{totalQuests}</span>
             </div>
-            <div className={`max-h-1 flex flex-1 rounded-3xl bg-customGreyWhiteTheme/[0.08] dark:bg-white/10 relative before:absolute before:w-[${progressCustomBar || progressStatus}%] before:h-1 before:rounded-3xl before:bg-${progressStatusColor}`} />
+            <div className="absolute h-1 rounded-3xl bottom-0" style={{
+                width: `${progressCustomBar || progressStatus}%`,
+                backgroundColor: fullConfig.theme.colors[progressStatusColor]
+            }}/>
+            <div className='max-h-1 flex flex-1 rounded-3xl bg-customGreyWhiteTheme/[0.08] dark:bg-white/10 relative'/>
         </div>
     )
 }
