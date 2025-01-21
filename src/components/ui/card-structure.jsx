@@ -1,21 +1,25 @@
 import { Plus, Ellipsis, List, Paperclip, MessageSquareText } from "lucide-react"
-
+import { useDroppable, useDraggable } from "@dnd-kit/core"
 import profile1 from "../../assets/profile1.png"
 import profile2 from "../../assets/profile2.png"
 
 import tailwindConfig from "../../../tailwind.config"
 import resolveConfig from 'tailwindcss/resolveConfig'
 
-export function CardContent({ text, count, cardInfo }) {
+export function CardContent({ column, count, cardInfo }) {
     function toggleDialog() {
         const dialog = document.querySelector('dialog')
         dialog.showModal()
     }
 
+    const { setNodeRef } = useDroppable({
+        id: column.id
+    })
+
     return (
-        <div className="max-w-[calc(100%/3)] min-w-[320px] flex flex-col flex-1 gap-4 rounded-xl bg-white dark:bg-customCardContent p-4 outline-customGreyWhiteTheme/[0.08] outline-2 outline-dashed dark:outline-0">
-            <div className="max-h-[18px] min-w-[320px] flex flex-1 justify-between items-center mt-1.5 text-customGreyWhiteTheme/50 dark:text-white/50">
-                <span className="font-semibold text-sm">{ text } ({ count })</span>
+        <div className="max-h-[85.5vh] max-w-[calc(100%/3)] min-w-[320px] flex flex-col flex-1 gap-4 rounded-xl bg-white dark:bg-customCardContent pt-4 pl-4 pb-4 outline-customGreyWhiteTheme/[0.08] outline-2 outline-dashed dark:outline-0">
+            <div className="max-h-[18px] min-w-[320px] flex flex-1 justify-between items-center mt-1.5 text-customGreyWhiteTheme/50 dark:text-white/50 mr-4">
+                <span className="font-semibold text-sm">{ column.title } ({ count })</span>
                 <div className="flex gap-1.5 cursor-pointer"  onClick={toggleDialog}>
                     <div className="h-[18px] w-[18px] flex justify-center items-center rounded-3xl bg-customGreyWhiteTheme/[0.08] dark:bg-white/10">
                         <Plus size={10} strokeWidth={4}/>
@@ -23,12 +27,14 @@ export function CardContent({ text, count, cardInfo }) {
                     <span className="h-[14px] font-semibold text-sm text-customGreyWhiteTheme dark:text-white">Add new task</span>
                 </div>
             </div>
-            <div className="flex flex-col flex-1 gap-[14px] relative text-customGreyWhiteTheme/50 dark:text-white/50">
-                {cardInfo.map((item, index) => {
+            
+            <div ref={setNodeRef} className="overflow-y-auto overflow-x-hidden flex flex-col flex-1 gap-[14px] relative text-customGreyWhiteTheme/50 dark:text-white/50 mr-1.5 scrollStyle">
+                {cardInfo.map(item => {
                     return item.title ? (
-                        <div key={index} className="max-h-[178px] min-w-[320px] flex flex-1 relative">
+                        <div key={item.id} className="max-h-[178px] min-w-[320px] flex flex-1 relative mr-1.5">
                             <BehindMask/>
                             <Card 
+                                id = {item.id}
                                 title = {item.title} 
                                 description = {item.description} 
                                 totalQuests = {item.totalQuests} 
@@ -42,7 +48,7 @@ export function CardContent({ text, count, cardInfo }) {
                             />
                         </div>
                         ):(
-                            <div key={index} className="max-h-[178px] min-w-[320px] flex flex-1 relative">
+                            <div key={item.id} className="max-h-[178px] min-w-[320px] flex flex-1 relative mr-1.5">
                                 <BehindMask/>
                             </div>
                         )
@@ -59,8 +65,22 @@ function Card(props) {
         dialog.showModal()
     }
 
+    const { attributes, listeners, setNodeRef, transform } = useDraggable({
+        id: props.id
+    })
+
+    const style = transform ? {
+        transform: `translate(${transform.x}px,${transform.y}px)`
+    }:undefined
+
     return (            
-        <div className="relative flex flex-col flex-1 gap-5 p-5 rounded-2xl bg-white dark:bg-customCard border-customGreyWhiteTheme/[0.06] border-2 dark:border-0">
+        <div 
+            ref={setNodeRef} 
+            {...attributes} 
+            {...listeners} 
+            className="relative flex flex-col flex-1 gap-5 p-5 rounded-2xl bg-white dark:bg-customCard border-customGreyWhiteTheme/[0.06] border-2 dark:border-0 active:cursor-grabbing active:z-10" 
+            style={style}
+        >
             <div className="h-[37px] flex flex-1 justify-between mb-[1px]">
                 <div className="flex flex-col gap-1.5 cursor-pointer"  onClick={toggleDialog}>
                     <span className="h-4 font-bold text-base text-customGreyWhiteTheme dark:text-white leading-4">{ props.title }</span>
@@ -103,7 +123,7 @@ function Progress ({ totalQuests, tasksComplete, progressStatusColor, progressCu
     const fullConfig = resolveConfig(tailwindConfig)
 
     return (
-        <div className="h-[30px] flex flex-col flex-1 justify-between relative">
+        <div className="h-[30px] flex flex-col flex-1 justify-between relative gap-2.5">
             <div className="max-h-4 flex flex-1 justify-between items-center">
                 <div className="flex gap-1 items-center">
                     <List size={16} className="text-customGreyWhiteTheme/60 dark:text-white/60"/>
@@ -115,7 +135,7 @@ function Progress ({ totalQuests, tasksComplete, progressStatusColor, progressCu
                 width: `${progressCustomBar || progressStatus}%`,
                 backgroundColor: fullConfig.theme.colors[progressStatusColor]
             }}/>
-            <div className='max-h-1 flex flex-1 rounded-3xl bg-customGreyWhiteTheme/[0.08] dark:bg-white/10 relative'/>
+            <div className='max-h-1 min-h-1 flex flex-1 rounded-3xl bg-customGreyWhiteTheme/[0.08] dark:bg-white/10 relative'/>
         </div>
     )
 }
@@ -153,4 +173,41 @@ function CardInteraction (props) {
             <></>
         )    
     }
+}
+
+export function CardOverlay(props) {
+    function toggleDialog() {
+        const dialog = document.querySelector('dialog')
+        dialog.showModal()
+    }
+
+    return (            
+        <div className="relative flex flex-col flex-1 gap-5 p-5 rounded-2xl bg-white dark:bg-customCard border-customGreyWhiteTheme/[0.06] border-2 dark:border-0 active:cursor-grabbing active:z-10 text-customGreyWhiteTheme/50 dark:text-white/50">
+            <div className="h-[37px] flex flex-1 justify-between mb-[1px]">
+                <div className="flex flex-col gap-1.5 cursor-pointer"  onClick={toggleDialog}>
+                    <span className="h-4 font-bold text-base text-customGreyWhiteTheme dark:text-white leading-4">{ props.title }</span>
+                    <span className="h-[15px] font-medium text-sm leading-4">{ props.description }</span>
+                </div>
+                <div className="h-[26px] w-[26px] flex justify-center items-center rounded-3xl border-2 border-customGreyWhiteTheme/[0.08] dark:border-white/10 top-0 right-0 cursor-pointer" onClick={toggleDialog}>
+                    <Ellipsis size={14} strokeWidth={3}/>
+                </div>
+            </div>    
+            <Progress 
+                totalQuests = {props.totalQuests}
+                tasksComplete = {props.tasksComplete}
+                progressStatusColor = {props.progressStatusColor}
+                progressCustomBar = {props.progressCustomBar} 
+            />
+            <div className="h-[30px] flex flex-1 justify-between items-center">
+                <div className="h-[30px] w-[113px] flex justify-center items-center rounded-2xl bg-customDateWhiteTheme/10 dark:bg-white/[0.06]">
+                    <span className="font-semibold text-sm text-customDateWhiteTheme dark:text-customDateColor">{props.date}</span>
+                </div>
+                <CardInteraction 
+                    messages = {props.messages}
+                    attachment = {props.attachment}
+                    usersCont = {props.usersCont}
+                />
+            </div>
+        </div>
+    )
 }

@@ -4,3 +4,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    .scrollStyle {
+        scrollbar-gutter: stable
+    }
+
+    .scrollStyle::-webkit-scrollbar {
+        @apply w-1
+    }
+
+    .scrollStyle::-webkit-scrollbar-thumb  {
+        @apply bg-customCard rounded-3xl
+    }
+}

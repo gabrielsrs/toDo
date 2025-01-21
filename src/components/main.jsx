@@ -3,20 +3,44 @@ import { useState, useContext } from "react"
 import { Search, Bell, Calendar, StretchHorizontal, Plus, Ellipsis } from "lucide-react"
 import profile from "../assets/profile.png"
 
-import { CardContent } from "./ui/card-structure"
-import { cardData } from "../data/getTodo.js"
+import { CardContent, CardOverlay } from "./ui/card-structure"
+import { cardData, columns } from "../data/getTodo.js"
 import { Button } from "../components/ui/button.jsx"
 import { Context } from "../App.jsx"
 
+import { DndContext, DragOverlay } from "@dnd-kit/core"
+
 export function Main() {
     const [search, setSearch] = useState(false)
+    const [activeId, setActiveId] = useState();
 
     function toggleDialog() {
         const dialog = document.querySelector('dialog')
         dialog.showModal()
     }
 
-    const { todo, inProgress, done } = cardData()
+    const initialTasks = cardData()
+    const [tasks, setTasks] = useState(initialTasks)
+
+    function handleDragEnd(event) {
+        const { active, over } = event
+
+        if(!over) return;
+
+        const taskId = active.id
+        const newStatus = over.id
+
+        setTasks(() => tasks.map(task => task.id === taskId ? {
+            ...tasks[taskId],
+            status: newStatus
+        }: task))
+    }
+
+    function handleDragStart(event) {
+        const { id } = event.active
+
+        setActiveId(id)
+    }
 
     const [selectedItem] = useContext(Context)
 
@@ -77,33 +101,25 @@ export function Main() {
                 </div>
                 <hr className="border-[1px] border-customGreyWhiteTheme/[0.08] dark:border-white/10"/>
             </menu>
-            
-            {selectedItem.length && selectedItem[2][0]  && (
-                <div className="flex flex-1 gap-[22px]">
-                    <CardContent text="To do" count={todo.length} cardInfo={ todo } />
-                    <CardContent text="In progress" count={inProgress.length} cardInfo={ inProgress } />
-                    <CardContent text="Done" count={done.length} cardInfo={ done } />
-                </div>
-            )}
-        
-            {selectedItem.length && selectedItem[2][1] && (
-                <div className="flex flex-1 gap-[22px]">
-                    <CardContent text="To do" count={todo.length} cardInfo={ todo } />
-                </div>
-            )}
-        
-            {selectedItem.length && selectedItem[2][2] && (
-                <div className="flex flex-1 gap-[22px]">
-                    <CardContent text="In progress" count={inProgress.length} cardInfo={ inProgress } />
-                </div>
-            )}
-        
-            {selectedItem.length && selectedItem[2][3] && (
-                <div className="flex flex-1 gap-[22px]">
-                    <CardContent text="Done" count={done.length} cardInfo={ done } />
-                </div>
-            )}
-            
+
+            <div className="flex flex-1 gap-[22px]">
+                <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
+                    {columns.map((column, index) => {
+                        const filteredTasks = tasks.filter(item => item.status === column.id)
+                        
+                        if (selectedItem.length && selectedItem[2][0]) {
+                            return (
+                                <CardContent key={column.id} column={column} count={filteredTasks.length} cardInfo={ filteredTasks } />
+                            )
+                        } else if (selectedItem.length && selectedItem[2][index + 1]) {
+                            return (
+                                <CardContent key={column.id} column={column} count={filteredTasks.length} cardInfo={ filteredTasks } />
+                            )
+                        }
+                    })}
+                    <DragOverlay>{activeId ? <CardOverlay {...tasks[activeId]}/>:null}</DragOverlay>
+                </DndContext>
+            </div>            
         </main>
     )
 }
