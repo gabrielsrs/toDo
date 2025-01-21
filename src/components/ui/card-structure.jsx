@@ -1,12 +1,14 @@
 import { Plus, Ellipsis, List, Paperclip, MessageSquareText } from "lucide-react"
-import { useDroppable, useDraggable } from "@dnd-kit/core"
+import { useDroppable } from "@dnd-kit/core"
+import { SortableContext, verticalListSortingStrategy, useSortable } from "@dnd-kit/sortable"
+import { CSS } from "@dnd-kit/utilities"
 import profile1 from "../../assets/profile1.png"
 import profile2 from "../../assets/profile2.png"
 
 import tailwindConfig from "../../../tailwind.config"
 import resolveConfig from 'tailwindcss/resolveConfig'
 
-export function CardContent({ column, count, cardInfo }) {
+export function CardContent({ column, count, cardInfo, activeId }) {
     function toggleDialog() {
         const dialog = document.querySelector('dialog')
         dialog.showModal()
@@ -28,33 +30,40 @@ export function CardContent({ column, count, cardInfo }) {
                 </div>
             </div>
             
-            <div ref={setNodeRef} className="overflow-y-auto overflow-x-hidden flex flex-col flex-1 gap-[14px] relative text-customGreyWhiteTheme/50 dark:text-white/50 mr-1.5 scrollStyle">
-                {cardInfo.map(item => {
-                    return item.title ? (
-                        <div key={item.id} className="max-h-[178px] min-w-[320px] flex flex-1 relative mr-1.5">
-                            <BehindMask/>
-                            <Card 
-                                id = {item.id}
-                                title = {item.title} 
-                                description = {item.description} 
-                                totalQuests = {item.totalQuests} 
-                                tasksComplete = {item.tasksComplete} 
-                                progressStatusColor = {item.progressStatusColor} 
-                                progressCustomBar = {item.progressCustomBar} 
-                                messages = {item.messages} 
-                                attachment = {item.attachment} 
-                                usersCont = {item.usersCont} 
-                                date = {item.date} 
-                            />
-                        </div>
-                        ):(
+            <SortableContext
+                id={column.id}
+                items={cardInfo}
+                strategy={verticalListSortingStrategy}
+            >
+                <div ref={setNodeRef} className="overflow-y-auto overflow-x-hidden flex flex-col flex-1 gap-[14px] relative text-customGreyWhiteTheme/50 dark:text-white/50 mr-1.5 scrollStyle">
+                    {cardInfo.map(item => {
+                        return item.title ? (
                             <div key={item.id} className="max-h-[178px] min-w-[320px] flex flex-1 relative mr-1.5">
                                 <BehindMask/>
+                                <Card 
+                                    id = {item.id}
+                                    title = {item.title} 
+                                    description = {item.description} 
+                                    totalQuests = {item.totalQuests} 
+                                    tasksComplete = {item.tasksComplete} 
+                                    progressStatusColor = {item.progressStatusColor} 
+                                    progressCustomBar = {item.progressCustomBar} 
+                                    messages = {item.messages} 
+                                    attachment = {item.attachment} 
+                                    usersCont = {item.usersCont} 
+                                    date = {item.date}
+                                    activeId = {activeId}
+                                />
                             </div>
-                        )
-                    })
-                }
-            </div>
+                            ):(
+                                <div key={item.id} className="max-h-[178px] min-w-[320px] flex flex-1 relative mr-1.5">
+                                    <BehindMask/>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+            </SortableContext>
         </div>
     )
 }
@@ -65,20 +74,24 @@ function Card(props) {
         dialog.showModal()
     }
 
-    const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
         id: props.id
     })
 
-    const style = transform ? {
-        transform: `translate(${transform.x}px,${transform.y}px)`
-    }:undefined
+    const onDraggingStyle = props.activeId && props.activeId === props.id? {opacity: 0.2}: null
+
+    const style = {
+        ...onDraggingStyle,
+        transition,
+        transform: CSS.Transform.toString(transform)
+    }
 
     return (            
         <div 
             ref={setNodeRef} 
             {...attributes} 
             {...listeners} 
-            className="relative flex flex-col flex-1 gap-5 p-5 rounded-2xl bg-white dark:bg-customCard border-customGreyWhiteTheme/[0.06] border-2 dark:border-0 active:cursor-grabbing active:z-10" 
+            className="relative flex flex-col flex-1 gap-5 p-5 rounded-2xl bg-white dark:bg-customCard border-customGreyWhiteTheme/[0.06] border-2 dark:border-0 active:cursor-grabbing z-10" 
             style={style}
         >
             <div className="h-[37px] flex flex-1 justify-between mb-[1px]">

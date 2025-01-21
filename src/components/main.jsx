@@ -8,7 +8,9 @@ import { cardData, columns } from "../data/getTodo.js"
 import { Button } from "../components/ui/button.jsx"
 import { Context } from "../App.jsx"
 
-import { DndContext, DragOverlay } from "@dnd-kit/core"
+import { DndContext, DragOverlay, closestCorners, useSensors, useSensor, PointerSensor, KeyboardSensor } from "@dnd-kit/core"
+import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable"
+import { restrictToWindowEdges } from "@dnd-kit/modifiers"
 
 export function Main() {
     const [search, setSearch] = useState(false)
@@ -22,27 +24,91 @@ export function Main() {
     const initialTasks = cardData()
     const [tasks, setTasks] = useState(initialTasks)
 
-    function handleDragEnd(event) {
-        const { active, over } = event
-
-        if(!over) return;
-
-        const taskId = active.id
-        const newStatus = over.id
-
-        setTasks(() => tasks.map(task => task.id === taskId ? {
-            ...tasks[taskId],
-            status: newStatus
-        }: task))
-    }
-
     function handleDragStart(event) {
         const { id } = event.active
 
         setActiveId(id)
     }
 
+    function handleDragOver(event) {
+        const { active, over, draggingRect } = event
+        const taskId = active.id
+        const overId = over.id
+
+        const activeContainer = findContainer(taskId)
+        const overContainer = findContainer(overId)
+
+        if (!activeContainer || !overContainer || activeContainer === overContainer) return
+
+        setTasks(prevValues => {
+            const overItems = prevValues.filter(item => item.status === overContainer)
+      
+            const activeIndex = getTaskIndex(taskId)
+            const overIndex = getTaskIndex(overId)
+      
+            let newIndex
+
+            const lastItemIndex = overItems.length? getTaskIndex(overItems.slice(-1)[0].id): 0
+
+            if (columns.map(item => item.id).includes(overId) || overItems.slice(-1)[0].id === overId) {
+              newIndex = lastItemIndex + 1
+            } else {
+              const isBelowLastItem = over && overIndex === lastItemIndex - 1 && draggingRect && draggingRect.offsetTop > over.rect.offsetTop + over.rect.height
+      
+              const modifier = isBelowLastItem ? 1 : 0
+      
+              newIndex = overIndex >= 0 ? overIndex + modifier : lastItemIndex + 1
+            }
+
+            prevValues[activeIndex].status = overContainer
+      
+            return [
+                ...prevValues.filter((item, index) => index <= newIndex && item.id !== taskId),
+                tasks[activeIndex],
+                ...prevValues.filter((item, index) => index > newIndex && item.id !== taskId)
+            ]
+          })
+    }
+
+    function handleDragEnd(event) {
+        const { active, over } = event
+        const taskId = active.id
+        const overId = over.id
+
+        const activeContainer = findContainer(taskId)
+        const overContainer = findContainer(overId)
+
+        if (!activeContainer || !overContainer || activeContainer !== overContainer) return
+
+        const activeIndex = getTaskIndex(taskId)
+        const overIndex = getTaskIndex(overId)
+
+        if (activeIndex !== overIndex) {
+            setTasks((prevValues) => arrayMove(prevValues, activeIndex, overIndex))
+        }
+        setActiveId(null)
+    }
+
+    function findContainer(id) {
+        if (columns.map(item => item.id).includes(id)) {
+            return id
+        }
+
+        return tasks.find(item => item.id === id && item.status).status
+    }
+
+    function getTaskIndex(id) {
+        return tasks.findIndex(item => item.id === id)
+    }
+
     const [selectedItem] = useContext(Context)
+    
+    const sensors = useSensors(
+        useSensor(PointerSensor),
+        useSensor(KeyboardSensor, {
+            coordinateGetter: sortableKeyboardCoordinates
+        })
+    )
 
     return (
         <main className="flex flex-col flex-1 bg-white dark:bg-mainComponent px-8 pb-8 pt-[29px]">
@@ -103,21 +169,27 @@ export function Main() {
             </menu>
 
             <div className="flex flex-1 gap-[22px]">
-                <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
+                <DndContext 
+                    sensors={sensors}
+                    collisionDetection={closestCorners}
+                    onDragStart={handleDragStart} 
+                    onDragOver={handleDragOver} 
+                    onDragEnd={handleDragEnd}
+                >
                     {columns.map((column, index) => {
                         const filteredTasks = tasks.filter(item => item.status === column.id)
                         
                         if (selectedItem.length && selectedItem[2][0]) {
                             return (
-                                <CardContent key={column.id} column={column} count={filteredTasks.length} cardInfo={ filteredTasks } />
+                                <CardContent key={column.id} column={column} count={filteredTasks.length} cardInfo={ filteredTasks } activeId={activeId}/>
                             )
                         } else if (selectedItem.length && selectedItem[2][index + 1]) {
                             return (
-                                <CardContent key={column.id} column={column} count={filteredTasks.length} cardInfo={ filteredTasks } />
+                                <CardContent key={column.id} column={column} count={filteredTasks.length} cardInfo={ filteredTasks } activeId={activeId}/>
                             )
                         }
                     })}
-                    <DragOverlay>{activeId ? <CardOverlay {...tasks[activeId]}/>:null}</DragOverlay>
+                    <DragOverlay modifiers={[restrictToWindowEdges]}>{activeId ?<CardOverlay {...tasks.find(item => item.id === activeId)}/>: null}</DragOverlay>
                 </DndContext>
             </div>            
         </main>

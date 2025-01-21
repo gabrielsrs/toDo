@@ -14,6 +14,6 @@
     }
 
     .scrollStyle::-webkit-scrollbar-thumb  {
-        @apply bg-customCard rounded-3xl
+        @apply bg-customGreyWhiteTheme/[0.08] dark:bg-customCard rounded-3xl
     }
 }
