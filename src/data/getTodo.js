@@ -7,7 +7,7 @@ export const columns = [
 export function cardData() {
     const data = [
         {   
-            id: 0,
+            id: 1,
             title: "Design new ui presentation",
             description: "Dribbble marketing",
             totalQuests: 10,
@@ -20,7 +20,7 @@ export function cardData() {
             status: "todo"
         },
         {
-            id: 1,
+            id: 2,
             title: "Add more ui/ux mockups",
             description: "Pinterest promotion",
             totalQuests: 10,
@@ -33,7 +33,7 @@ export function cardData() {
             status: "todo"
         },
         {
-            id: 2,
+            id: 3,
             title: "Design few mobile screens",
             description: "Dropbox mobile app",
             totalQuests: 10,
@@ -46,7 +46,7 @@ export function cardData() {
             status: "todo"
         },
         {
-            id: 3,
+            id: 4,
             title: "Create a tweet and promote",
             description: "Twitter marketing",
             totalQuests: 14,
@@ -60,7 +60,7 @@ export function cardData() {
             status: "todo"
         },
         {
-            id: 4,
+            id: 5,
             title: "Design system update",
             description: "Oreo website project",
             totalQuests: 10,
@@ -73,7 +73,7 @@ export function cardData() {
             status: "inProgress"
         },
         {
-            id: 5,
+            id: 6,
             title: "Create brand guideline",
             description: "Oreo branding project",
             totalQuests: 10,
@@ -86,7 +86,7 @@ export function cardData() {
             status: "inProgress"
         },
         {
-            id: 6,
+            id: 7,
             title: "Create wireframe for ios app",
             description: "Oreo ios app project",
             totalQuests: 10,
@@ -99,7 +99,7 @@ export function cardData() {
             status: "inProgress"
         },
         {
-            id: 7,
+            id: 8,
             title: "Create ui kit for layout",
             description: "Crypto mobile app",
             totalQuests: 10,
@@ -112,7 +112,7 @@ export function cardData() {
             status: "inProgress"
         },
         {
-            id: 8,
+            id: 9,
             title: "Add product to the market",
             description: "Ui8 marketplace",
             totalQuests: 10,
@@ -125,7 +125,7 @@ export function cardData() {
             status: "done"
         },
         {
-            id: 9,
+            id: 10,
             title: "Launch product promotion",
             description: "Kickstarter campaign",
             totalQuests: 10,
@@ -138,7 +138,7 @@ export function cardData() {
             status: "done"
         },
         {
-            id: 10,
+            id: 11,
             title: "Make twitter banner",
             description: "Twitter marketing",
             totalQuests: 10,
