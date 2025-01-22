@@ -4,25 +4,34 @@ import { Search, Bell, Calendar, StretchHorizontal, Plus, Ellipsis } from "lucid
 import profile from "../assets/profile.png"
 
 import { CardContent, CardOverlay } from "./ui/card-structure"
-import { cardData, columns } from "../data/getTodo.js"
+import { columns } from "../data/getTodo.js"
 import { Button } from "../components/ui/button.jsx"
-import { Context } from "../App.jsx"
+import { ChoseColumn, Tasks } from "../App.jsx"
 
-import { DndContext, DragOverlay, closestCorners, useSensors, useSensor, PointerSensor, KeyboardSensor } from "@dnd-kit/core"
+import { DndContext, DragOverlay, pointerWithin, closestCorners, useSensors, useSensor, PointerSensor, KeyboardSensor } from "@dnd-kit/core"
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable"
 import { restrictToWindowEdges } from "@dnd-kit/modifiers"
 
+function customCollisionDetectionAlgorithm(args) {
+    const pointerCollisions = pointerWithin(args);
+    
+    if (pointerCollisions.length > 0) {
+      return pointerCollisions;
+    }
+    
+    return closestCorners(args);
+  }
+
 export function Main() {
     const [search, setSearch] = useState(false)
-    const [activeId, setActiveId] = useState();
+    const [activeId, setActiveId] = useState()
+    const [selectedItem] = useContext(ChoseColumn)
+    const [tasks, setTasks] = useContext(Tasks)
 
     function toggleDialog() {
         const dialog = document.querySelector('dialog')
         dialog.showModal()
     }
-
-    const initialTasks = cardData()
-    const [tasks, setTasks] = useState(initialTasks)
 
     function handleDragStart(event) {
         const { id } = event.active
@@ -72,6 +81,11 @@ export function Main() {
 
     function handleDragEnd(event) {
         const { active, over } = event
+        if(!over) {
+            setActiveId(null)
+            return
+        }
+
         const taskId = active.id
         const overId = over.id
 
@@ -100,11 +114,13 @@ export function Main() {
     function getTaskIndex(id) {
         return tasks.findIndex(item => item.id === id)
     }
-
-    const [selectedItem] = useContext(Context)
     
     const sensors = useSensors(
-        useSensor(PointerSensor),
+        useSensor(PointerSensor, {
+            activationConstraint: {
+                delay: 100
+            }
+        }),
         useSensor(KeyboardSensor, {
             coordinateGetter: sortableKeyboardCoordinates
         })
@@ -171,7 +187,7 @@ export function Main() {
             <div className="flex flex-1 gap-[22px]">
                 <DndContext 
                     sensors={sensors}
-                    collisionDetection={closestCorners}
+                    collisionDetection={customCollisionDetectionAlgorithm}
                     onDragStart={handleDragStart} 
                     onDragOver={handleDragOver} 
                     onDragEnd={handleDragEnd}
@@ -189,7 +205,7 @@ export function Main() {
                             )
                         }
                     })}
-                    <DragOverlay modifiers={[restrictToWindowEdges]}>{activeId ?<CardOverlay {...tasks.find(item => item.id === activeId)}/>: null}</DragOverlay>
+                    <DragOverlay modifiers={[restrictToWindowEdges]} style={{ cursor: 'grabbing' }}>{activeId ?<CardOverlay {...tasks.find(item => item.id === activeId)}/>: null}</DragOverlay>
                 </DndContext>
             </div>            
         </main>

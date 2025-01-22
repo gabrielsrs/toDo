@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Plus, SunMedium, Moon } from "lucide-react"
 import { Tree } from "../components/ui/tree-items"
 import { DropDownSideItem } from "../components/ui/dropDownSideItem"
+import { columns } from "../data/getTodo"
 
 export function Projects() {
     const [isOpen, setIsOpen] = useState([
@@ -36,7 +37,7 @@ export function Projects() {
         },
         {
             title: "Tasks",
-            items: ["All tasks (11)", "To do (4)", "In progress (4)", "Done"],
+            items: ["All tasks", ...columns],
         },
         {
             title: "Reminders",

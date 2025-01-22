@@ -4,19 +4,26 @@ import { SideBar } from './components/sidebar'
 import { Projects } from './components/projects'
 import { Main } from './components/main'
 import { Dialog } from "./components/ui/dialog.jsx"
+import { cardData } from './data/getTodo.js'
 
-export const Context = createContext()
+export const ChoseColumn = createContext()
+export const Tasks = createContext()
 
 function App() {
   const [selectedItem, setSelectedItem] = useState([])
+
+  const initialTasks = cardData()
+  const [tasks, setTasks] = useState(initialTasks)
   
   return (
     <>
       <SideBar/>
-      <Context.Provider value={[selectedItem, setSelectedItem]}>
-        <Projects/>
-        <Main/>
-      </Context.Provider>
+      <Tasks.Provider value={[tasks, setTasks]}>
+        <ChoseColumn.Provider value={[selectedItem, setSelectedItem]}>
+          <Projects/>
+          <Main/>
+        </ChoseColumn.Provider>
+      </Tasks.Provider>
       <Dialog />
     </>
   )
