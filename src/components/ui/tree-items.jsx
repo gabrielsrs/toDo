@@ -1,8 +1,10 @@
 import { useContext, useEffect } from "react";
-import { Context } from "../../App";
+import { ChoseColumn, Tasks } from "../../App";
+import { columns } from "../../data/getTodo";
 
 export function Tree({ items, isOpen, index }) {
-    const [selectedItem, setSelectedItem] = useContext(Context)
+    const [selectedItem, setSelectedItem] = useContext(ChoseColumn)
+    const [tasks] = useContext(Tasks)
 
     function selectItem(ind) {
         setSelectedItem(prevValue => {
@@ -29,7 +31,13 @@ export function Tree({ items, isOpen, index }) {
                         <i className="h-[2px] w-[13px] bg-customGreyWhiteTheme/10 dark:bg-white/10 absolute top-[18px] left-[2px]"></i>
                     </div>
                     <div className={`min-w-0 flex justify-start items-center px-4 py-2 max-w-45 rounded-3xl ${selectedItem[index][i] ? "bg-customGreyWhiteTheme/[0.04] dark:bg-white/10" : ""} cursor-pointer`} onClick={() => selectItem(i)}>
-                        <span className={`leading-9 truncate ${selectedItem[index][i] ? "text-customGreyWhiteTheme dark:text-white" : ""}`}>{ item }</span>
+                        <span className={`leading-9 truncate ${selectedItem[index][i] ? "text-customGreyWhiteTheme dark:text-white" : ""}`}>{
+                            index === 2? 
+                                columns.some(column => column.title === item.title)? 
+                                    `${item.title} (${tasks.filter(task => task.status === item.id).length})`:
+                                    `${item} (${tasks.length})`
+                            :item
+                        }</span>
                     </div>
                 </li>
             ))}

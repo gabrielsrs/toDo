@@ -78,7 +78,7 @@ function Card(props) {
         id: props.id
     })
 
-    const onDraggingStyle = props.activeId && props.activeId === props.id? {opacity: 0.2}: null
+    const onDraggingStyle = props.activeId && props.activeId === props.id? {opacity: 0}: null
 
     const style = {
         ...onDraggingStyle,
@@ -91,15 +91,15 @@ function Card(props) {
             ref={setNodeRef} 
             {...attributes} 
             {...listeners} 
-            className="relative flex flex-col flex-1 gap-5 p-5 rounded-2xl bg-white dark:bg-customCard border-customGreyWhiteTheme/[0.06] border-2 dark:border-0 active:cursor-grabbing z-10" 
+            className="relative flex flex-col flex-1 gap-5 p-5 rounded-2xl bg-white dark:bg-customCard border-customGreyWhiteTheme/[0.06] border-2 dark:border-0 hover:cursor-grab z-10" 
             style={style}
         >
             <div className="h-[37px] flex flex-1 justify-between mb-[1px]">
-                <div className="flex flex-col gap-1.5 cursor-pointer"  onClick={toggleDialog}>
+                <div className="flex flex-col gap-1.5 cursor-pointer z-20"  onClick={toggleDialog}>
                     <span className="h-4 font-bold text-base text-customGreyWhiteTheme dark:text-white leading-4">{ props.title }</span>
                     <span className="h-[15px] font-medium text-sm leading-4">{ props.description }</span>
                 </div>
-                <div className="h-[26px] w-[26px] flex justify-center items-center rounded-3xl border-2 border-customGreyWhiteTheme/[0.08] dark:border-white/10 top-0 right-0 cursor-pointer" onClick={toggleDialog}>
+                <div className="h-[26px] w-[26px] flex justify-center items-center rounded-3xl border-2 border-customGreyWhiteTheme/[0.08] dark:border-white/10 top-0 right-0 cursor-pointer z-20" onClick={toggleDialog}>
                     <Ellipsis size={14} strokeWidth={3}/>
                 </div>
             </div>    
@@ -195,13 +195,13 @@ export function CardOverlay(props) {
     }
 
     return (            
-        <div className="relative flex flex-col flex-1 gap-5 p-5 rounded-2xl bg-white dark:bg-customCard border-customGreyWhiteTheme/[0.06] border-2 dark:border-0 active:cursor-grabbing active:z-10 text-customGreyWhiteTheme/50 dark:text-white/50">
+        <div className="relative flex flex-col flex-1 gap-5 p-5 rounded-2xl bg-white dark:bg-customCard border-customGreyWhiteTheme/[0.06] border-2 dark:border-0 active:z-10 text-customGreyWhiteTheme/50 dark:text-white/50">
             <div className="h-[37px] flex flex-1 justify-between mb-[1px]">
-                <div className="flex flex-col gap-1.5 cursor-pointer"  onClick={toggleDialog}>
+                <div className="flex flex-col gap-1.5 active:cursor-grabbing"  onClick={toggleDialog}>
                     <span className="h-4 font-bold text-base text-customGreyWhiteTheme dark:text-white leading-4">{ props.title }</span>
                     <span className="h-[15px] font-medium text-sm leading-4">{ props.description }</span>
                 </div>
-                <div className="h-[26px] w-[26px] flex justify-center items-center rounded-3xl border-2 border-customGreyWhiteTheme/[0.08] dark:border-white/10 top-0 right-0 cursor-pointer" onClick={toggleDialog}>
+                <div className="h-[26px] w-[26px] flex justify-center items-center rounded-3xl border-2 border-customGreyWhiteTheme/[0.08] dark:border-white/10 top-0 right-0 active:cursor-grabbing" onClick={toggleDialog}>
                     <Ellipsis size={14} strokeWidth={3}/>
                 </div>
             </div>    
