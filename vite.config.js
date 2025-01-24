@@ -6,5 +6,6 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: parseInt(3000),
-  }
+  },
+  base: "/toDo/"
 })

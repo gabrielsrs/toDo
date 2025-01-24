@@ -4,7 +4,7 @@ import App from './App.jsx'
 import RawPage from './raw-page.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
+  <BrowserRouter basename="/toDo">
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/user" element={<RawPage />} />
