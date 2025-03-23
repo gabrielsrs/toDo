@@ -1,6 +1,7 @@
 # ToDo
 
-The app replicates the UI/UX from the following Figma design: [Minimalist ToDo App](https://www.figma.com/community/file/1156486092786444945)
+The app replicates the UI/UX from the following Figma design [Minimalist ToDo App](https://www.figma.com/community/file/1156486092786444945)
+generating the [site](https://gabrielsrs.github.io/toDo/) result using React
 
 ## Getting Started
 - Prerequisites
