@@ -1,10 +1,12 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { Plus, SunMedium, Moon } from "lucide-react"
 import { Tree } from "../components/ui/tree-items"
 import { DropDownSideItem } from "../components/ui/dropDownSideItem"
 import { columns } from "../data/getTodo"
+import { ThemeContext } from "../theme"
 
 export function Projects() {
+    const { toggleTheme } = useContext(ThemeContext)
     const [isOpen, setIsOpen] = useState([
         { title: "Projects", status: false },
         { title: "Team", status: false },
@@ -12,14 +14,6 @@ export function Projects() {
         { title: "Reminders", status: false },
         { title: "Messengers", status: false }
     ])
-    
-    function themeLight() {
-        document.documentElement.classList.contains('dark') && document.documentElement.classList.toggle('dark')
-    }
-
-    function themeDark() {
-        document.documentElement.classList.contains('dark') || document.documentElement.classList.toggle('dark')
-    }
 
     function toggleDialog() {
         const dialog = document.querySelector('dialog')
@@ -71,14 +65,14 @@ export function Projects() {
                 </div>
             </div>
             <div className="h-[42px] w-[262px] flex justify-center items-center rounded-3xl bg-customGreyWhiteTheme/[0.04]	dark:bg-white/10">
-                <div className={`h-[34px] w-[127px] flex justify-center items-center gap-1.5 rounded-3xl bg-white dark:bg-white/0 text-customGreyWhiteTheme dark:text-white/50 cursor-pointer`} onClick={() => {themeLight()}}>
-                    <SunMedium size={20}/>
-                    <span className="text-sm font-semibold">Light</span>
-                </div>
-                <div className={`h-[34px] w-[127px] flex justify-center items-center gap-1.5 rounded-3xl bg-white/0 dark:bg-white/10 text-customGreyWhiteTheme/50 dark:text-white cursor-pointer`} onClick={() => {themeDark()}}>
-                    <Moon size={20}/>
-                    <span className="text-sm font-semibold">Dark</span>
-                </div>
+                <button name="light" type="button" className={`h-[34px] w-[127px] flex justify-center items-center gap-1.5 rounded-3xl bg-white dark:bg-white/0 text-customGreyWhiteTheme dark:text-white/50 cursor-pointer`} onClick={event => toggleTheme(event.target.name)}>
+                    <SunMedium size={20} className="pointer-events-none"/>
+                    <span className="text-sm font-semibold pointer-events-none">Light</span>
+                </button>
+                <button name="dark" type="button" className={`h-[34px] w-[127px] flex justify-center items-center gap-1.5 rounded-3xl bg-white/0 dark:bg-white/10 text-customGreyWhiteTheme/50 dark:text-white cursor-pointer`} onClick={event => toggleTheme(event.target.name)}>
+                    <Moon size={20} className="pointer-events-none"/>
+                    <span className="text-sm font-semibold pointer-events-none">Dark</span>
+                </button>
             </div>
         </div>
     )

@@ -127,7 +127,7 @@ export function Main() {
     )
 
     return (
-        <main className="flex flex-col flex-1 bg-white dark:bg-mainComponent px-8 pb-8 pt-[29px]">
+        <main className="h-screen flex flex-col flex-1 bg-white dark:bg-mainComponent px-8 pb-8 pt-[29px]">
             <header className="h-16 flex mb-[1px]">
                 <div className="h-9 flex-1 flex justify-between items-center text-customGreyWhiteTheme dark:text-white">
                     <div>
@@ -184,7 +184,7 @@ export function Main() {
                 <hr className="border-[1px] border-customGreyWhiteTheme/[0.08] dark:border-white/10"/>
             </menu>
 
-            <div className="flex flex-1 gap-[22px]">
+            <div className="h-screen overflow-hidden flex flex-1 gap-[22px]">
                 <DndContext 
                     sensors={sensors}
                     collisionDetection={customCollisionDetectionAlgorithm}
